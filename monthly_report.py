@@ -52,7 +52,3 @@ class Monthly_Report:
         if self.__is_valid():
             return self.__extract_all_data()
         raise PageContentInvalid("This page does not seem to be valid")
-
-# HTTP because otherwise it would be necessary to deal with certificates
-report = Monthly_Report("http://fnet.bmfbovespa.com.br")
-print(report.get_report_from_document_id(237235))
