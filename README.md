@@ -37,3 +37,8 @@ Currently, it is pretty simple and straightforward to extract data: first, creat
 Then, you run `get_report_from_document_id` and pass a parameter called `document_id`. This value represents which page you are trying to collect data from. You will need to search for a report and then copy this `document_id`. For instance, if you visited *https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=229904*, `document_id` is **229904**.
 
 After running the above method, you will get a dict or an exception.
+
+
+## Things to know
+
+If you provide a `base_url` as **https** you may have problems with certificates. You can try to solve that or just drop the `s` and make it just **http**.
