@@ -9,7 +9,7 @@ class Monthly_Report:
     def __init__(self, base_url: str):
         self.__base_url = base_url
     
-    def __extract_item(self, item: str, from_body=False) -> str:
+    def __extract_item(self, item: str) -> str:
         result = self.__raw_data.find(text=re.compile(item))
         if result:
             return result.parent.parent.next_sibling.string
