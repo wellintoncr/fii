@@ -1,15 +1,17 @@
+# Project related
+from scrap_exceptions import PageLoadingFailed, PageContentInvalid, ItemNotFound
+from html_extractor import HTML_Extractor
+
+# External libraries
 from bs4 import BeautifulSoup
 from datetime import datetime
-import requests
 import re
 
-from scrap_exceptions import PageLoadingFailed, PageContentInvalid, ItemNotFound
 
 class Dividend_Report:
-    def __init__(self, base_url: str):
-        self.__base_url = base_url
     
     def __extract_item(self, item: str, from_body=False) -> str:
+        """Extract one item where any text contain 'item'."""
         result = self.__raw_data.find(text=re.compile(item))
         if result:
             if from_body:
@@ -17,12 +19,16 @@ class Dividend_Report:
             return result.parent.parent.next_sibling.string
         raise ItemNotFound(f"Item not found: {item}")
 
-    def __format_item(self, item: str, format: str):
+    def __format_item(self, item: str, format: str="datetime") -> float or datetime:
+        """Format 'item' to a defined type.
+        Type accepts 'float' and datetime is the default behaviour.
+        """
         if format == "float":
             return float(item.replace(".", "").replace(",", "."))
         return datetime.strptime(item, "%d/%m/%Y")
 
-    def __extract_all_data(self):
+    def __extract_all_data(self) -> dict:
+        """Combine all individual items into one dict."""
         dividend = self.__extract_item("Valor do provento por cota", from_body=True)
         payment_date = self.__extract_item("Data do pagamento", from_body=True)
         output = {
@@ -33,19 +39,17 @@ class Dividend_Report:
         }
         return output
     
-    def __is_valid(self):
+    def __is_valid(self) -> bool:
+        """Verify page to make sure it is valid."""
         header = self.__raw_data.find("h1")
         if header:
             return header.contents[0].lower() == "informações sobre pagamento de proventos"
         return False
 
     def get_report_from_document_id(self, document_id: int) -> dict:
-        url = f"{self.__base_url}/fnet/publico/exibirDocumento?id={document_id}"
-        headers = {"accept": "text/html"}
-        response = requests.get(url, headers=headers)
-        if response.status_code != 200:
-            raise PageLoadingFailed(f"Page loading failed. Status code: {response.status_code}")
-        self.__raw_data = BeautifulSoup(response.text, "html.parser")
+        """Based on 'document_id', extract full report."""
+        html_data = HTML_Extractor.get_raw_from_document_id(document_id)
+        self.__raw_data = BeautifulSoup(html_data, "html.parser")
         if self.__is_valid():
             return self.__extract_all_data()
         raise PageContentInvalid("This page does not seem to be valid")
