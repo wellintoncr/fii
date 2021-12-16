@@ -32,7 +32,7 @@ After installation, you are ready to use this project
 
 ### Creating instances
 
-Currently, it is pretty simple and straightforward to extract data: first, create an instance of a report that you want to get. To do so, pass a parameter called `base_url`. For now, this is *http://fnet.bmfbovespa.com.br*.
+Currently, it is pretty simple and straightforward to extract data: first, create an instance of a report that you want to get.
 
 Then, you run `get_report_from_document_id` and pass a parameter called `document_id`. This value represents which page you are trying to collect data from. You will need to search for a report and then copy this `document_id`. For instance, if you visited *https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=229904*, `document_id` is **229904**.
 
