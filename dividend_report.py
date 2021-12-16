@@ -1,5 +1,5 @@
 # Project related
-from scrap_exceptions import PageLoadingFailed, PageContentInvalid, ItemNotFound
+from scrap_exceptions import PageContentInvalid, ItemNotFound
 from html_extractor import HTML_Extractor
 
 # External libraries
