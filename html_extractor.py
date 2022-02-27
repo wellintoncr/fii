@@ -17,4 +17,6 @@ class HTML_Extractor:
         response = requests.get(url, headers=headers, timeout=timeout)
         if response.status_code != 200:
             raise PageLoadingFailed(f"Invalid status: {response.status_code}")
+        if "text/html" not in response.headers["content-type"]:
+            raise PageLoadingFailed(f"Invalid page type: {response.headers['content-type']}")
         return response.text
