@@ -9,7 +9,7 @@ import re
 
 
 class DividendReport:
-    
+
     def __extract_item(self, item: str, from_body=False) -> str:
         """Extract one item where any text contain 'item'."""
         result = self.__raw_data.find(text=re.compile(item))
@@ -19,7 +19,7 @@ class DividendReport:
             return result.parent.parent.next_sibling.string
         raise ItemNotFound(f"Item not found: {item}")
 
-    def __format_item(self, item: str, format: str="datetime") -> float or datetime:
+    def __format_item(self, item: str, format: str = "datetime") -> float or datetime:
         """Format 'item' to a defined type.
         Type accepts 'float' and datetime is the default behaviour.
         """
@@ -38,7 +38,7 @@ class DividendReport:
             "payment_date": self.__format_item(payment_date, "datetime")
         }
         return output
-    
+
     def __is_valid(self) -> bool:
         """Verify page to make sure it is valid."""
         header = self.__raw_data.find("h1")

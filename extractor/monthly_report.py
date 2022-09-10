@@ -7,8 +7,9 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 
+
 class MonthlyReport:
-    
+
     def __extract_item(self, item: str) -> str:
         """Extract one item where any text contain 'item'."""
         result = self.__raw_data.find(text=re.compile(item))
@@ -16,7 +17,7 @@ class MonthlyReport:
             return result.parent.parent.next_sibling.string
         raise ItemNotFound(f"Item not found: {item}")
 
-    def __format_item(self, item: str, format: str="datetime"):
+    def __format_item(self, item: str, format: str = "datetime"):
         """Format 'item' to a defined type.
         Type accepts 'float', 'int', and datetime is the default behaviour.
         """
@@ -40,7 +41,7 @@ class MonthlyReport:
             "reference_date": self.__format_item(reference_date, "datetime")
         }
         return output
-    
+
     def __is_valid(self):
         """Verify page to make sure it is valid."""
         header = self.__raw_data.find("h2")
