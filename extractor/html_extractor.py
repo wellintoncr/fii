@@ -4,7 +4,7 @@ from scrap_exceptions import PageLoadingFailed
 # External libraries
 import requests
 
-class HTML_Extractor:
+class HTMLExtractor:
     @staticmethod
     def get_raw_from_document_id(document_id: int, timeout=None):
         """Get page HTML based on 'document_id'.

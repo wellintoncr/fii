@@ -1,13 +1,13 @@
 # Project related
 from scrap_exceptions import PageContentInvalid, ItemNotFound
-from html_extractor import HTML_Extractor
+from html_extractor import HTMLExtractor
 
 # External libraries
 from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 
-class Monthly_Report:
+class MonthlyReport:
     
     def __extract_item(self, item: str) -> str:
         """Extract one item where any text contain 'item'."""
@@ -50,7 +50,7 @@ class Monthly_Report:
 
     def get_report_from_document_id(self, document_id: int) -> dict:
         """Based on 'document_id', extract full report."""
-        html_data = HTML_Extractor.get_raw_from_document_id(document_id)
+        html_data = HTMLExtractor.get_raw_from_document_id(document_id)
         self.__raw_data = BeautifulSoup(html_data, "html.parser")
         if self.__is_valid():
             return self.__extract_all_data()
