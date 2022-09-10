@@ -1,0 +1,29 @@
+version: "3.4"
+services:
+  database:
+    image: postgres:14.2
+    ports:
+      - "9876:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=app
+    volumes:
+      - ./start.sql:/docker-entrypoint-initdb.d/start.sql
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "app" ]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 1s
+    container_name: fii_database
+  extractor:
+    image: python:3.10.5-bullseye
+    volumes:
+      - ./extractor:/home/dev/extractor
+    depends_on:
+      - database
+    command: bash -c "cd /home/dev/extractor && pip install -r requirements.txt && tail -F file_not_found"
+    tty: true
+    stdin_open: true
+    container_name: fii_extractor
