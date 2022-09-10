@@ -20,7 +20,7 @@ services:
   extractor:
     image: python:3.10.5-bullseye
     volumes:
-      - ./extractor:/home/dev/extractor
+      - .:/home/dev/extractor
     depends_on:
       - database
     command: bash -c "cd /home/dev/extractor && pip install -r requirements.txt && tail -F file_not_found"
