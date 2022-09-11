@@ -4,7 +4,11 @@ echo "Running pre-commit hook"
 container_name="fii_extractor"
 
 if docker exec "$container_name" bash -c "cd home/dev/extractor && flake8 ."; then
-    exit 0
+    if docker exec "$container_name" bash -c "cd home/dev/extractor && coverage run -m pytest tests/ && coverage report --fail-under=100"; then
+        exit 0
+    else
+        echo "Coverage is under 100%"
+    fi
 else
     echo "Fix lint validation"
 fi

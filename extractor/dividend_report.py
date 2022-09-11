@@ -1,11 +1,9 @@
-# Project related
-from scrap_exceptions import PageContentInvalid, ItemNotFound
-from html_extractor import HTMLExtractor
-
-# External libraries
-from bs4 import BeautifulSoup
-from datetime import datetime
 import re
+from datetime import datetime
+from bs4 import BeautifulSoup
+
+from html_extractor import HTMLExtractor
+from scrap_exceptions import ItemNotFoundError, PageContentError
 
 
 class DividendReport:
@@ -17,7 +15,7 @@ class DividendReport:
             if from_body:
                 return result.parent.parent.contents[2].string
             return result.parent.parent.next_sibling.string
-        raise ItemNotFound(f"Item not found: {item}")
+        raise ItemNotFoundError(f"Item not found: {item}")
 
     def __format_item(self, item: str, format: str = "datetime") -> float or datetime:
         """Format 'item' to a defined type.
@@ -52,4 +50,4 @@ class DividendReport:
         self.__raw_data = BeautifulSoup(html_data, "html.parser")
         if self.__is_valid():
             return self.__extract_all_data()
-        raise PageContentInvalid("This page does not seem to be valid")
+        raise PageContentError("This page does not seem to be valid")
