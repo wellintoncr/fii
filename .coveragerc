@@ -1,0 +1,3 @@
+[run]
+source=extractor
+omit=extractor/main.py

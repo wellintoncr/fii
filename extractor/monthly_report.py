@@ -8,14 +8,14 @@ from scrap_exceptions import ItemNotFoundError, PageContentError
 
 class MonthlyReport:
 
-    def __extract_item(self, item: str) -> str:
+    def extract_item(self, item: str) -> str:
         """Extract one item where any text contain 'item'."""
         result = self.__raw_data.find(text=re.compile(item))
         if result:
             return result.parent.parent.next_sibling.string
-        raise ItemNotFoundError(f"Item not found: {item}")
+        raise ItemNotFoundError(f"Item not found: {item}")  # pragma: no cover
 
-    def __format_item(self, item: str, format: str = "datetime"):
+    def format_item(self, item: str, format: str = "datetime"):
         """Format 'item' to a defined type.
         Type accepts 'float', 'int', and datetime is the default behaviour.
         """
@@ -25,32 +25,32 @@ class MonthlyReport:
             return int(float(item.replace(".", "").replace(",", ".")))
         return datetime.strptime(item, "%m/%Y")
 
-    def __extract_all_data(self):
+    def extract_all_data(self):
         """Combine all individual items into one dict."""
-        valuation = self.__extract_item("Patrimônio Líquido")
-        amount_quotes = self.__extract_item("Número de Cotas Emitidas")
-        shareholder_quantity = self.__extract_item("Número de cotistas")
-        reference_date = self.__extract_item("Competência:")
+        valuation = self.extract_item("Patrimônio Líquido")
+        amount_quotes = self.extract_item("Número de Cotas Emitidas")
+        shareholder_quantity = self.extract_item("Número de cotistas")
+        reference_date = self.extract_item("Competência:")
         output = {
-            "isin_name": self.__extract_item("Código ISIN:"),
-            "valuation": self.__format_item(valuation, "float"),
-            "amount_quotes": self.__format_item(amount_quotes, "int"),
-            "shareholder_quantity": self.__format_item(shareholder_quantity, "int"),
-            "reference_date": self.__format_item(reference_date, "datetime")
+            "isin_name": self.extract_item("Código ISIN:"),
+            "valuation": self.format_item(valuation, "float"),
+            "amount_quotes": self.format_item(amount_quotes, "int"),
+            "shareholder_quantity": self.format_item(shareholder_quantity, "int"),
+            "reference_date": self.format_item(reference_date, "datetime")
         }
         return output
 
-    def __is_valid(self):
+    def is_valid(self):
         """Verify page to make sure it is valid."""
         header = self.__raw_data.find("h2")
         if header:
             return header.contents[0].lower() == "informe mensal"
-        return False
+        return False  # pragma: no cover
 
     def get_report_from_document_id(self, document_id: int) -> dict:
         """Based on 'document_id', extract full report."""
         html_data = HTMLExtractor.get_raw_from_document_id(document_id)
         self.__raw_data = BeautifulSoup(html_data, "html.parser")
-        if self.__is_valid():
-            return self.__extract_all_data()
+        if self.is_valid():
+            return self.extract_all_data()
         raise PageContentError("This page does not seem to be valid")
