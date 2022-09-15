@@ -10,7 +10,7 @@ class DividendReport:
 
     def extract_item(self, item: str, from_body=False) -> str:
         """Extract one item where any text contain 'item'."""
-        result = self.__raw_data.find(text=re.compile(item))
+        result = self.__raw_data.find(string=re.compile(item))
         if result:
             if from_body:
                 return result.parent.parent.contents[2].string

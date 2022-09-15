@@ -10,7 +10,7 @@ class MonthlyReport:
 
     def extract_item(self, item: str) -> str:
         """Extract one item where any text contain 'item'."""
-        result = self.__raw_data.find(text=re.compile(item))
+        result = self.__raw_data.find(string=re.compile(item))
         if result:
             return result.parent.parent.next_sibling.string
         raise ItemNotFoundError(f"Item not found: {item}")  # pragma: no cover
