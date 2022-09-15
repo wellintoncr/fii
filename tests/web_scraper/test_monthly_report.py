@@ -1,9 +1,9 @@
 from datetime import datetime
 from unittest import mock
 
-from extractor.monthly_report import MonthlyReport
-
 import pytest
+
+from web_scraper.monthly_report import MonthlyReport
 
 
 def test_get_report_from_document_id_with_valid_response():
@@ -26,7 +26,7 @@ def test_get_report_from_document_id_with_valid_response():
 
 def test_get_report_from_document_id_with_invalid_response():
     with mock.patch("html_extractor.HTMLExtractor.get_raw_from_document_id") as mock_raw:
-        with mock.patch("extractor.monthly_report.MonthlyReport.is_valid") as is_valid_mock:
+        with mock.patch("web_scraper.monthly_report.MonthlyReport.is_valid") as is_valid_mock:
             is_valid_mock.return_value = False
             with open("tests/mocks/mock_monthly_report.html", "r") as file:
                 to_return = file.readlines()

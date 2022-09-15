@@ -1,8 +1,8 @@
 from unittest import mock
 
-from extractor.html_extractor import HTMLExtractor
-
 import pytest
+
+from web_scraper.html_extractor import HTMLExtractor
 
 
 def test_get_report_from_document_id_with_valid_response():

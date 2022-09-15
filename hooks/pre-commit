@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "Running pre-commit hook"
-container_name="fii_extractor"
+container_name="fii_web_scraper"
 
-if docker exec "$container_name" bash -c "cd home/dev/extractor && flake8 ."; then
-    if docker exec "$container_name" bash -c "cd home/dev/extractor && coverage run -m pytest tests/ && coverage report -m --fail-under=100"; then
+if docker exec "$container_name" bash -c "cd home/dev/web_scraper && flake8 ."; then
+    if docker exec "$container_name" bash -c "cd home/dev/web_scraper && coverage run -m pytest tests/ && coverage report -m --fail-under=100"; then
         exit 0
     else
         echo "Coverage is under 100%"

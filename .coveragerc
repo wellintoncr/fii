@@ -1,3 +1,3 @@
 [run]
-source=extractor
-omit=extractor/main.py
+source=web_scraper
+omit=web_scraper/main.py

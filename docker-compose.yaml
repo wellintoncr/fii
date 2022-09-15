@@ -17,13 +17,13 @@ services:
       retries: 5
       start_period: 1s
     container_name: fii_database
-  extractor:
+  scraper:
     image: python:3.10.5-bullseye
     volumes:
-      - .:/home/dev/extractor
+      - .:/home/dev/web_scraper
     depends_on:
       - database
-    command: bash -c "cd /home/dev/extractor && pip install -r requirements.txt && tail -F file_not_found"
+    command: bash -c "cd /home/dev/web_scraper && pip install -r requirements.txt && tail -F file_not_found"
     tty: true
     stdin_open: true
-    container_name: fii_extractor
+    container_name: fii_web_scraper
