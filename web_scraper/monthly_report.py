@@ -1,16 +1,17 @@
 import re
 from datetime import datetime
-from bs4 import BeautifulSoup
 
-from html_extractor import HTMLExtractor
-from scrap_exceptions import ItemNotFoundError, PageContentError
+from scrap_exceptions import ItemNotFoundError
 
 
 class MonthlyReport:
 
+    def __init__(self, html_raw: str) -> None:
+        self.html_raw = html_raw
+
     def extract_item(self, item: str) -> str:
         """Extract one item where any text contain 'item'."""
-        result = self.__raw_data.find(string=re.compile(item))
+        result = self.html_raw.find(string=re.compile(item))
         if result:
             return result.parent.parent.next_sibling.string
         raise ItemNotFoundError(f"Item not found: {item}")  # pragma: no cover
@@ -38,19 +39,4 @@ class MonthlyReport:
             "shareholder_quantity": self.format_item(shareholder_quantity, "int"),
             "reference_date": self.format_item(reference_date, "datetime")
         }
-        return output
-
-    def is_valid(self):
-        """Verify page to make sure it is valid."""
-        header = self.__raw_data.find("h2")
-        if header:
-            return header.contents[0].lower() == "informe mensal"
-        return False  # pragma: no cover
-
-    def get_report_from_document_id(self, document_id: int) -> dict:
-        """Based on 'document_id', extract full report."""
-        html_data = HTMLExtractor.get_raw_from_document_id(document_id)
-        self.__raw_data = BeautifulSoup(html_data, "html.parser")
-        if self.is_valid():
-            return self.extract_all_data()
-        raise PageContentError("This page does not seem to be valid")
+        return output, None

@@ -1,16 +1,17 @@
 import re
 from datetime import datetime
-from bs4 import BeautifulSoup
 
-from html_extractor import HTMLExtractor
-from scrap_exceptions import ItemNotFoundError, PageContentError
+from scrap_exceptions import ItemNotFoundError
 
 
 class DividendReport:
 
+    def __init__(self, html_raw: str) -> None:
+        self.html_raw = html_raw
+
     def extract_item(self, item: str, from_body=False) -> str:
         """Extract one item where any text contain 'item'."""
-        result = self.__raw_data.find(string=re.compile(item))
+        result = self.html_raw.find(string=re.compile(item))
         if result:
             if from_body:
                 return result.parent.parent.contents[2].string
@@ -35,19 +36,4 @@ class DividendReport:
             "dividend": self.format_item(dividend, "float"),
             "payment_date": self.format_item(payment_date, "datetime")
         }
-        return output
-
-    def is_valid(self) -> bool:
-        """Verify page to make sure it is valid."""
-        header = self.__raw_data.find("h1")
-        if header:
-            return header.contents[0].lower() == "informações sobre pagamento de proventos"
-        return False  # pragma: no cover
-
-    def get_report_from_document_id(self, document_id: int) -> dict:
-        """Based on 'document_id', extract full report."""
-        html_data = HTMLExtractor.get_raw_from_document_id(document_id)
-        self.__raw_data = BeautifulSoup(html_data, "html.parser")
-        if self.is_valid():
-            return self.extract_all_data()
-        raise PageContentError("This page does not seem to be valid")
+        return output, None
