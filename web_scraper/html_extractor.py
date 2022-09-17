@@ -1,7 +1,5 @@
 import requests
 
-from scrap_exceptions import PageLoadingError
-
 
 class HTMLExtractor:
     @staticmethod
@@ -14,8 +12,5 @@ class HTMLExtractor:
         url = f"{base_url}/fnet/publico/exibirDocumento?id={document_id}"
         headers = {"accept": "text/html"}
         response = requests.get(url, headers=headers, timeout=timeout)
-        if response.status_code != 200:
-            raise PageLoadingError(f"Invalid status: {response.status_code}")
-        if "text/html" not in response.headers["content-type"]:
-            raise PageLoadingError(f"Invalid page type: {response.headers['content-type']}")
-        return response.text
+        if response.status_code == 200 and "text/html" in response.headers["content-type"]:
+            return response.text

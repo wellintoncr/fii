@@ -28,11 +28,11 @@ class DividendReport:
 
     def extract_all_data(self) -> dict:
         """Combine all individual items into one dict."""
-        dividend = self.extract_item("Valor do provento por cota", from_body=True)
+        dividend = self.extract_item("Valor do provento", from_body=True)
         payment_date = self.extract_item("Data do pagamento", from_body=True)
         output = {
-            "name": self.extract_item("Código de negociação da cota"),
-            "isin_name": self.extract_item("Código ISIN da cota"),
+            "name": self.extract_item("Código de negociação"),
+            "isin_name": self.extract_item("Código ISIN"),
             "dividend": self.format_item(dividend, "float"),
             "payment_date": self.format_item(payment_date, "datetime")
         }
