@@ -20,10 +20,10 @@ services:
   scraper:
     image: python:3.10.5-bullseye
     volumes:
-      - .:/home/dev/web_scraper
+      - .:/home/dev/fii
     depends_on:
       - database
-    command: bash -c "cd /home/dev/web_scraper && pip install -r requirements.txt && tail -F file_not_found"
+    command: bash -c "cd /home/dev/fii && pip install -r requirements.txt && tail -F file_not_found"
     tty: true
     stdin_open: true
-    container_name: fii_web_scraper
+    container_name: fii_tools
