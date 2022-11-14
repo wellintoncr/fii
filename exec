@@ -1,0 +1,21 @@
+#!/bin/bash
+
+container_name="fii_tools"
+
+if [[ $1 == "" ]]; then
+    echo "Available options:"
+    echo "tests"
+    echo "coverage"
+    echo "web_scraper"
+elif [[ $1 == "tests" ]]; then
+    echo "Runnig tests"
+    docker exec -it "$container_name" bash -c "cd home/dev/fii && pytest tests/"
+elif [[ $1 == "coverage" ]]; then
+    echo "Coverage"
+    docker exec -it "$container_name" bash -c "cd home/dev/fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"
+elif [[ $1 == "web_scraper" ]]; then
+    echo "Web scraping"
+    docker exec -it "$container_name" bash -c "cd /home/dev/fii/web_scraper && python script.py"
+else
+    echo "Unknown option"
+fi

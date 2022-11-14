@@ -13,14 +13,14 @@ MAX_LONGEST_FAILURE_COUNTER = 1000
 
 
 def first_report_id():
-    raw_files_list = os.listdir("output/")
+    raw_files_list = os.listdir("../output/")
     reports_id = [int(each.split(".")[0]) for each in raw_files_list if ".json" in each]
     reports_id.sort(reverse=True)
     return reports_id[0] if reports_id else 200_000
 
 
 def get_longest_run():
-    raw_files_list = os.listdir("failures/")
+    raw_files_list = os.listdir("../failures/")
     reports_id = [int(each.split(".")[1]) for each in raw_files_list if "not_found" in each]
     longest_run = 0
     reports_id.sort(reverse=True)
@@ -59,14 +59,14 @@ else:
                 scraper = Scraper(html_raw)
                 report = scraper.extract_report()
                 if report["report_type"]:
-                    with open(f"output/{document_id}.json", "w+") as file:
+                    with open(f"../output/{document_id}.json", "w+") as file:
                         content = orjson.dumps(report).decode()
                         file.write(content)
                 else:
-                    with open(f"failures/not_found.{document_id}.txt", "w+") as file:
+                    with open(f"../failures/not_found.{document_id}.txt", "w+") as file:
                         file.write("Nothing to extract")
             except exc.ItemNotFoundError as err:
-                with open(f"failures/{document_id}.txt", "w+") as file:
+                with open(f"../failures/{document_id}.txt", "w+") as file:
                     file.write(f"{err} || {document_id}")
             except Exception:
                 pass
