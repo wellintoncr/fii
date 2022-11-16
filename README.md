@@ -2,7 +2,7 @@
 
 ## Idea
 
-This project is intended to extract FIIs (*Fundos de Investimento Imobiliário*, in Portuguese) from Bovespa reports. Usually, there are two types of useful reports: monthly report and dividend report. The former is an overview about this investment and it is released once a month, usually. The latter is, as its name suggests, a report about dividend performance and it is released once a month, usually.
+This project is intended to extract and analyze FIIs (*Fundos de Investimento Imobiliário*, in Portuguese) from Bovespa reports. Usually, there are two types of useful reports: monthly report and dividend report. The former is an overview about this investment and it is released once a month, usually. The latter is, as its name suggests, a report about dividend performance and it is released once a month, usually.
 
 ### What it does NOT do
 
@@ -10,35 +10,34 @@ If you are looking for information that is not present in any of the above repor
 
 ### What it WILL (maybe) do
 
-These two reports contain more information than collected by this project. Maybe, it would be useful to get more fields and it is quite simple to do: just inspect the page and look for a pattern.
+These two reports contain more information than collected by this project. It might be useful to get more fields and it is quite simple to do: just inspect the page and look for a pattern.
 
-## How to use
+## Requirements
 
-### Environment
+*  docker-compose 1.29+
+*  docker 20.10+
 
-First of all, it is advised you use a virtual env for this project. So,
+## How to use it
+
+Just run:
 ```sh
-python3 -m venv .venv
-source .venv/bin/activate
+./exec all  # This terminal will be 'locked' because it will be attached to all containers
 ```
 
-### Installing dependencies
-
-Just install all dependencies from requirements file
+To see all options available, run:
 ```sh
-pip3 install -r requirements.txt
+./exec
 ```
-After installation, you are ready to use this project
 
-### Creating instances
+And then you can execute something like `./exec tests`
 
-Currently, it is pretty simple and straightforward to extract data: first, create an instance of a report that you want to get.
+## Current flow
 
-Then, you run `get_report_from_document_id` and pass a parameter called `document_id`. This value represents which page you are trying to collect data from. You will need to search for a report and then copy this `document_id`. For instance, if you visited *https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=229904*, `document_id` is **229904**.
+First, verify how many documents will be scraped and save this number into `web_scraper/script.py` (variable **batch_size**). You can change the failure threshold as well, so this script will check whether previous scrap process had more errors than expected. If so, it will not proceed.
 
-After running the above method, you will get a dict or an exception.
+Then, you should wait the script to finish this step (it may take a while depending on how many documents you want to scrap). After that, all valid documents will be saved onto **output** folder. Failed documents will be saved onto **failures** as well.
+
+After scraping, you can execute `analyzer/script.py` and check its output. If the final report is still "irrelevant" (it has just a few data), so you should increase the *batch_size* variable in the scraping step and keep extracting data until you have enough information.
 
 
-## Things to know
-
-If you provide a `base_url` as **https** you may have problems with certificates. You can try to solve that or just drop the `s` and make it just **http**.
+Usually, the first couple attempts to scrap should have small *batch_size* so you can quickly check whether it is working or something went bad, such as connection issues. After testing this step, you can increase *batch_size* to tens or hundreds of thousands documents. Of course, it will take longer, but you will have more data.
