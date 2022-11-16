@@ -8,6 +8,7 @@ if [[ $1 == "" ]]; then
     echo "tests"
     echo "coverage"
     echo "web_scraper"
+    echo "analyzer"
 elif [[ $1 == "all" ]]; then
     echo "Starting containers"
     docker-compose up
@@ -20,6 +21,9 @@ elif [[ $1 == "coverage" ]]; then
 elif [[ $1 == "web_scraper" ]]; then
     echo "Web scraping"
     docker exec -it "$container_name" bash -c "cd /home/dev/fii/web_scraper && python script.py"
+elif [[ $1 == "analyzer" ]]; then
+    echo "Reports analyzer"
+    docker exec -it "$container_name" bash -c "cd /home/dev/fii/analyzer && python script.py"
 else
     echo "Unknown option"
 fi
