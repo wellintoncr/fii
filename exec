@@ -4,11 +4,15 @@ container_name="fii_tools"
 
 if [[ $1 == "" ]]; then
     echo "Available options:"
+    echo "all"
     echo "tests"
     echo "coverage"
     echo "web_scraper"
+elif [[ $1 == "all" ]]; then
+    echo "Starting containers"
+    docker-compose up
 elif [[ $1 == "tests" ]]; then
-    echo "Runnig tests"
+    echo "Running tests"
     docker exec -it "$container_name" bash -c "cd home/dev/fii && pytest tests/"
 elif [[ $1 == "coverage" ]]; then
     echo "Coverage"
