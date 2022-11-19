@@ -129,8 +129,8 @@ dmypy.json
 .pyre/
 
 # Output files
-**/output/*.json
-**/failures/*.txt
+**/webpages_dump/*.html
+**/webpages_not_found/*.txt
 
 # Config file
 stock/config.py
