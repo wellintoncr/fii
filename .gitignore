@@ -131,3 +131,6 @@ dmypy.json
 # Output files
 **/output/*.json
 **/failures/*.txt
+
+# Config file
+stock/config.py
