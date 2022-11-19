@@ -29,7 +29,13 @@ def test_extract_monthly_report():
             "isin_name": "BRALMICTF003",
             "valuation": 250264016.46,
             "reference_date": datetime(2021, 12, 1),
-            "shareholder_quantity": 3154
+            "shareholder_quantity": 3154,
+            "has_deadline": False,
+            "type": {
+                "mandato": "renda",
+                "segmento": "lajes corporativas",
+                "gestao": "passiva"
+            }
         },
         "error": None
     }
