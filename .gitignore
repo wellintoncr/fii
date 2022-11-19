@@ -131,6 +131,7 @@ dmypy.json
 # Output files
 **/webpages_dump/*.html
 **/webpages_not_found/*.txt
+**/reports_data/*.json
 
 # Config file
 stock/config.py
