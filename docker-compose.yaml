@@ -17,13 +17,17 @@ services:
       retries: 5
       start_period: 1s
     container_name: fii_database
-  scraper:
-    image: python:3.10.5-bullseye
+  tool:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/home/dev/fii
     depends_on:
       - database
-    command: bash -c "cd /home/dev/fii && pip install -r requirements.txt && tail -F file_not_found"
+    command: bash -c "cd fii && pip install -r requirements.txt && tail -F file_not_found"
+    environment:
+      - PATH=$PATH:/home/dev/.local/bin
     tty: true
     stdin_open: true
     container_name: fii_tools

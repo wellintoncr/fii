@@ -3,8 +3,8 @@
 echo "Running pre-commit hook"
 container_name="fii_tools"
 
-if docker exec "$container_name" bash -c "cd home/dev/fii && flake8 ."; then
-    if docker exec "$container_name" bash -c "cd home/dev/fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"; then
+if docker exec "$container_name" bash -c "cd fii && flake8 ."; then
+    if docker exec "$container_name" bash -c "cd fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"; then
         exit 0
     else
         echo "Coverage is under 100%"

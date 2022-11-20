@@ -15,19 +15,19 @@ elif [[ $1 == "all" ]]; then
     docker-compose up
 elif [[ $1 == "tests" ]]; then
     echo "Running tests"
-    docker exec -it "$container_name" bash -c "cd home/dev/fii && pytest tests/ -vv"
+    docker exec -it "$container_name" bash -c "cd fii && pytest tests/ -vv"
 elif [[ $1 == "coverage" ]]; then
     echo "Coverage"
-    docker exec -it "$container_name" bash -c "cd home/dev/fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"
+    docker exec -it "$container_name" bash -c "cd fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"
 elif [[ $1 == "web_extractor" ]]; then
     echo "Web extractor"
-    docker exec -it "$container_name" bash -c "cd /home/dev/fii/webpage_extractor && python script.py"
+    docker exec -it "$container_name" bash -c "cd fii/webpage_extractor && python script.py"
 elif [[ $1 == "web_scraper" ]]; then
     echo "HTML scraper"
-    docker exec -it "$container_name" bash -c "cd /home/dev/fii/web_scraper && python script.py"
+    docker exec -it "$container_name" bash -c "cd fii/web_scraper && python script.py"
 elif [[ $1 == "analyzer" ]]; then
     echo "Reports analyzer"
-    docker exec -it "$container_name" bash -c "cd /home/dev/fii/analyzer && python script.py"
+    docker exec -it "$container_name" bash -c "cd fii/analyzer && python script.py"
 else
     echo "Unknown option"
 fi
