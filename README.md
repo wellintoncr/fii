@@ -33,11 +33,18 @@ And then you can execute something like `./exec tests`
 
 ## Current flow
 
-First, verify how many documents will be scraped and save this number into `web_scraper/script.py` (variable **batch_size**). You can change the failure threshold as well, so this script will check whether previous scrap process had more errors than expected. If so, it will not proceed.
-
-Then, you should wait the script to finish this step (it may take a while depending on how many documents you want to scrap). After that, all valid documents will be saved onto **output** folder. Failed documents will be saved onto **failures** as well.
-
-After scraping, you can execute `analyzer/script.py` and check its output. If the final report is still "irrelevant" (it has just a few data), so you should increase the *batch_size* variable in the scraping step and keep extracting data until you have enough information.
-
+First, verify how many documents will be extracted and save this number into `webpage_extractor/script.py` (variable **batch_size**). You can change the failure threshold as well, so this script will check whether previous extraction process had more errors than expected. If so, it will not proceed.
 
 Usually, the first couple attempts to scrap should have small *batch_size* so you can quickly check whether it is working or something went bad, such as connection issues. After testing this step, you can increase *batch_size* to tens or hundreds of thousands documents. Of course, it will take longer, but you will have more data.
+
+Then, you should wait the script to finish this step (it may take a while depending on how many documents you want to save). After that, all valid documents will be saved onto **webpages_dump** folder. Not found documents will be saved onto **webpages_not_found** as well.
+
+After saving all documents you need, you can execute `web_scraper/script.py` and, if everything goes well, a dense file will be created at **reports_data/reports.json**. This file contains all available reports based on all files extracted on the previous step.
+
+
+The steps below is yet to be implemented.
+~~To get stock prices (how much a fund's quote is worth), you should run `stock/script.py`.~~
+
+~~Then, you can execute `analyzer/script.py` to evaluate all reports and generate more data which should be helpful to measure funds' quality. If the final report is still "irrelevant" (it has just a few data), so you should increase the *batch_size* variable in the scraping step and keep extracting data until you have enough information.~~
+
+
