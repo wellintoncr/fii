@@ -18,7 +18,7 @@ if longest_run == MAX_LONGEST_FAILURE_COUNTER:
     """)
 else:
     with ThreadPoolExecutor() as executor:
-        first_document_id = ext.last_saved_report_id("..")
+        first_document_id = ext.last_saved_report_id(WEBPAGES_DUMP_PATH)
         future_document = {
             executor.submit(hext.get_raw_from_document_id, document_id): document_id
             for document_id in range(first_document_id, first_document_id + batch_size + 1)
