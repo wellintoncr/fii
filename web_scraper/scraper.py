@@ -6,8 +6,9 @@ from monthly_report import MonthlyReport
 
 class Scraper:
 
-    def __init__(self, html_raw: str) -> None:
+    def __init__(self, html_raw: str, document_id: int) -> None:
         self.html_raw = BeautifulSoup(html_raw, "html.parser")
+        self.document_id = document_id
 
     def get_report_type(self):
         """Get report type based on self.html_raw."""
@@ -34,7 +35,7 @@ class Scraper:
             else:
                 dividend_report = DividendReport(self.html_raw)
                 data, error = dividend_report.extract_all_data()
-            output["data"] = data
+            output["data"] = dict(**data, document_id=self.document_id)
             output["error"] = error
         else:
             output["error"] = "unavailable"

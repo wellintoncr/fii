@@ -13,7 +13,8 @@ output = []
 for webpage in webpages:
     with open(f"{WEBPAGES_PATH}/{webpage}", "rb") as file:
         content = file.read().decode()
-    scraper = Scraper(content)
+    document_id = int(webpage.split(".html")[0])
+    scraper = Scraper(content, document_id=document_id)
     report_data = scraper.extract_report()
     if report_data["data"]:
         output.append(report_data)
