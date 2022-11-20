@@ -15,7 +15,7 @@ elif [[ $1 == "all" ]]; then
     docker-compose up
 elif [[ $1 == "tests" ]]; then
     echo "Running tests"
-    docker exec -it "$container_name" bash -c "cd home/dev/fii && pytest tests/"
+    docker exec -it "$container_name" bash -c "cd home/dev/fii && pytest tests/ -vv"
 elif [[ $1 == "coverage" ]]; then
     echo "Coverage"
     docker exec -it "$container_name" bash -c "cd home/dev/fii && coverage run -m pytest tests/ && coverage report -m --fail-under=100"
