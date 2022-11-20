@@ -31,5 +31,5 @@ else:
                 with open(f"{WEBPAGES_DUMP_PATH}/{document_id}.html", "w+") as file:
                     file.write(html_data["content"])
             elif html_data["status"] == "success":
-                with open(f"{WEBPAGES_NOT_FOUND_PATH}/{document_id}.html", "w+") as file:
+                with open(f"{WEBPAGES_NOT_FOUND_PATH}/{document_id}.txt", "w+") as file:
                     file.write("Not found")
