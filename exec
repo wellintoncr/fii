@@ -10,6 +10,7 @@ if [[ $1 == "" ]]; then
     echo "web_scraper"
     echo "web_extractor"
     echo "analyzer"
+    echo "stock"
 elif [[ $1 == "all" ]]; then
     echo "Starting containers"
     docker-compose up
@@ -28,6 +29,9 @@ elif [[ $1 == "web_scraper" ]]; then
 elif [[ $1 == "analyzer" ]]; then
     echo "Reports analyzer"
     docker exec -it "$container_name" bash -c "cd fii/analyzer && python script.py"
+elif [[ $1 == "stock" ]]; then
+    echo "Stock data extractor"
+    docker exec -it "$container_name" bash -c "cd fii/stock && python script.py"
 else
     echo "Unknown option"
 fi

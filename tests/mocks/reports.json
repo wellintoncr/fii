@@ -1,0 +1,77 @@
+[
+  {
+    "data": {
+      "name": "XPIN11",
+      "isin_name": "BRXPINCTF004",
+      "dividend": {
+        "amount": 0.64,
+        "payment_date": "2021-08-13T00:00:00",
+        "base_date": "2021-08-06T00:00:00"
+      },
+      "amortization": {
+        "amount": null,
+        "payment_date": null,
+        "base_date": null
+      },
+      "document_id": 200991
+    },
+    "error": null,
+    "report_type": "dividend_report"
+  },
+  {
+    "data": {
+      "name": "BLMR11",
+      "isin_name": "BRBLMRCTF002",
+      "dividend": {
+        "amount": 0.65,
+        "payment_date": "2021-08-13T00:00:00",
+        "base_date": "2021-08-05T00:00:00"
+      },
+      "amortization": {
+        "amount": null,
+        "payment_date": null,
+        "base_date": null
+      },
+      "document_id": 200232
+    },
+    "error": null,
+    "report_type": "dividend_report"
+  },
+  {
+    "data": {
+      "name": "RBRM11",
+      "isin_name": "BRRBRMCTF009",
+      "dividend": {
+        "amount": 6488.253511977,
+        "payment_date": "2021-08-13T00:00:00",
+        "base_date": "2021-08-06T00:00:00"
+      },
+      "amortization": {
+        "amount": null,
+        "payment_date": null,
+        "base_date": null
+      },
+      "document_id": 200983
+    },
+    "error": null,
+    "report_type": "dividend_report"
+  },
+  {
+    "data": {
+      "isin_name": "BRSTRXCTF006",
+      "valuation": 293952847.03,
+      "amount_quotes": 16076,
+      "shareholder_quantity": 53,
+      "reference_date": "2021-02-01T00:00:00",
+      "has_deadline": false,
+      "type": {
+        "mandato": "híbrido",
+        "segmento": "híbrido",
+        "gestao": "passiva"
+      },
+      "document_id": 200046
+    },
+    "error": null,
+    "report_type": "monthly_report"
+  }
+]

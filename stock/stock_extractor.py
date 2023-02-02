@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 
-import stock.config as config
+from stock import config
 
 
 def get_one(stock_name):
@@ -12,6 +12,8 @@ def get_one(stock_name):
     response = requests.get(url=url)
     if response.status_code == 200:
         content = response.json()
+        if content.get("Error Message"):
+            raise ValueError(content)
         stock_prices = deepcopy(content["Monthly Time Series"])
         stock_date_to_delete = [
             each for each in stock_prices.keys() if datetime.strptime(each, "%Y-%m-%d")

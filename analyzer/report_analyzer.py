@@ -1,25 +1,25 @@
-import os
+# import os
 from copy import deepcopy
 from datetime import datetime
 
 import orjson
 
 
-def gather_all_reports(folder_name: str):
-    files_list = [each for each in os.listdir(folder_name) if "json" in each]
-    output = {
-        "monthly_report": [],
-        "dividend_report": []
-    }
-    for each in files_list:
-        with open(f"{folder_name}/{each}", "rb") as file:
-            content = orjson.loads(file.read())
-        report_type = content.get("report_type")
-        if report_type in ["monthly_report", "dividend_report"]:
-            to_append = content["data"]
-            to_append["document_id"] = int(each.split(".")[0])
-            output[report_type].append(to_append)
-    return output
+# def gather_all_reports(folder_name: str):
+#     files_list = [each for each in os.listdir(folder_name) if "json" in each]
+#     output = {
+#         "monthly_report": [],
+#         "dividend_report": []
+#     }
+#     for each in files_list:
+#         with open(f"{folder_name}/{each}", "rb") as file:
+#             content = orjson.loads(file.read())
+#         report_type = content.get("report_type")
+#         if report_type in ["monthly_report", "dividend_report"]:
+#             to_append = content["data"]
+#             to_append["document_id"] = int(each.split(".")[0])
+#             output[report_type].append(to_append)
+#     return output
 
 
 def group_all_reports(all_reports: dict):
@@ -41,4 +41,16 @@ def group_all_reports(all_reports: dict):
             output[isin_name][key]["dividend_report"].append(each)
         else:
             output[isin_name][key]["monthly_report"].append(each)
+    return output
+
+
+def extract_id_isin_name(reports_data_file: str) -> dict:
+    with open(reports_data_file, "rb") as file:
+        content = orjson.loads(file.read())
+    output = {}
+    for each_report in content:
+        if each_report["report_type"] == "dividend_report":
+            key = each_report["data"]["name"]
+            value = each_report["data"]["isin_name"]
+            output.update({key: value})
     return output
