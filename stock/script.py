@@ -2,8 +2,8 @@ import sys
 import time
 import orjson
 
-import stock_extractor
 sys.path.append("..")
+import stock_extractor  # noqa: E402
 
 
 if __name__ == "__main__":
