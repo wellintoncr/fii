@@ -1,4 +1,5 @@
 from datetime import datetime
+import orjson
 
 from web_scraper.scraper import Scraper
 
@@ -139,3 +140,16 @@ def test_get_report_type_with_invalid_page():
         html_raw = "".join(html_raw)
     scraper = Scraper(html_raw, document_id=9999)
     assert scraper.get_report_type() is None
+
+
+def test_extract_id_isin_name():
+    report_file = './tests/mocks/reports.json'
+    with open(report_file, "rb") as mock_file:
+        content = orjson.loads(mock_file.read())
+    result = Scraper.extract_id_isin_name(content)
+    expected = {
+        "XPIN11": "BRXPINCTF004",
+        "BLMR11": "BRBLMRCTF002",
+        "RBRM11": "BRRBRMCTF009",
+    }
+    assert result == expected

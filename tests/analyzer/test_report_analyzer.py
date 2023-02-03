@@ -16,14 +16,3 @@ import tests.mocks.reports as reports_mock
 def test_group_all_reports():
     result = report_analyzer.group_all_reports(reports_mock.REPORTS_GATHERED_RAW)
     assert result == reports_mock.REPORTS_GATHERED_EXPECTED
-
-
-def test_extract_id_isin_name():
-    report_file = './tests/mocks/reports.json'
-    result = report_analyzer.extract_id_isin_name(report_file)
-    expected = {
-        "XPIN11": "BRXPINCTF004",
-        "BLMR11": "BRBLMRCTF002",
-        "RBRM11": "BRRBRMCTF009",
-    }
-    assert result == expected

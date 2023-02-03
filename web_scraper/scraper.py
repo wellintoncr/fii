@@ -40,3 +40,13 @@ class Scraper:
         else:
             output["error"] = "unavailable"
         return output
+
+    @staticmethod
+    def extract_id_isin_name(reports_data: list) -> dict:
+        output = {}
+        for each_report in reports_data:
+            if each_report["report_type"] == "dividend_report":
+                key = str(each_report["data"]["name"])
+                value = str(each_report["data"]["isin_name"])
+                output.update({key: value})
+        return output

@@ -24,3 +24,8 @@ if output:
     with open(f"{REPORTS_DATA_PATH}/reports.json", "w+") as file:
         content = orjson.dumps(output)
         file.write(content.decode())
+    breakpoint()
+    result = Scraper.extract_id_isin_name(output)
+    names_relation_file = f"{REPORTS_DATA_PATH}/names_relation.json"
+    with open(names_relation_file, "w+") as file:
+        file.write(orjson.dumps(result).decode())
