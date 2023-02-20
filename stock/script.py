@@ -20,14 +20,14 @@ if __name__ == "__main__":
         try:
             print(f"Extracting: {name}")
             all_stock_data.append(stock_extractor.get_one(name))
-            print("Cool down")
-            time.sleep(MIN_WAIT_TIME_SECONDS)
         except Exception as err:
             error_data = {
                 "name": name,
                 "error": str(err)
             }
             all_stock_data_failures.append(error_data)
+        print("Cool down")
+        time.sleep(MIN_WAIT_TIME_SECONDS)
     with open(stock_data_file, "w+") as file:
         file.write(orjson.dumps(all_stock_data).decode())
     with open(stock_data_failures_file, "w+") as file:

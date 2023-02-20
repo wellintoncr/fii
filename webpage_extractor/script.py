@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import extractor as ext
 import html_extractor as hext
 
-batch_size = 1000
+batch_size = 100000
 MAX_LONGEST_FAILURE_COUNTER = 1000
 
 WEBPAGES_NOT_FOUND_PATH = "../webpages_not_found"

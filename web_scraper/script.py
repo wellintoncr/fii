@@ -15,16 +15,18 @@ for webpage in webpages:
         content = file.read().decode()
     document_id = int(webpage.split(".html")[0])
     scraper = Scraper(content, document_id=document_id)
-    report_data = scraper.extract_report()
-    if report_data["data"]:
-        output.append(report_data)
-    else:
-        print(f"Something went wrong: {webpage}")
+    try:
+        report_data = scraper.extract_report()
+        if report_data["data"]:
+            output.append(report_data)
+        else:
+            print(f"Something went wrong: {webpage}")
+    except Exception as err:
+        print(f"Something went wrong: {webpage} | {err}")
 if output:
     with open(f"{REPORTS_DATA_PATH}/reports.json", "w+") as file:
         content = orjson.dumps(output)
         file.write(content.decode())
-    breakpoint()
     result = Scraper.extract_id_isin_name(output)
     names_relation_file = f"{REPORTS_DATA_PATH}/names_relation.json"
     with open(names_relation_file, "w+") as file:
