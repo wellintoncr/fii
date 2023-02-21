@@ -1,6 +1,6 @@
-import orjson
+import gather_data
 
-import report_analyzer as analyzer
+import orjson
 
 if __name__ == "__main__":
     with open("../reports_data/reports.json", "rb") as file:
@@ -10,8 +10,7 @@ if __name__ == "__main__":
     with open("../reports_data/stock_data.json", "rb") as file:
         stock_content = orjson.loads(file.read())
 
-    # all_data = analyzer.gather_all_reports(data_folder)
-    grouped_data = analyzer.gather_all_data(
+    grouped_data = gather_data.gather_all_data(
         names_relation=names_relation_content,
         report_data=reports_content,
         stock_data=stock_content)
